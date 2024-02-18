@@ -1,0 +1,56 @@
+#fff {
+    transition: transform 0.2s ease;
+  }
+  
+  #fff:hover {
+    transform: translateY(-10px);
+    color: rgb(134, 136, 136);
+  }
+#fffff{
+    background-color: blue;
+}
+#dsd{
+    margin-top: 45px;
+}
+#qqq{
+    margin-top: 45px;
+}
+#ttt{
+    margin-left: 10px;
+}
+#www{
+    line-height: 2.3;
+
+}
+
+  .select-icon option[data-icon] {
+    padding-left: 30px;
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 25px 25px;
+  }
+#uuu{
+    color: green;
+}
+  
+
+#uuu[value="1"] {
+  color: red;
+}
+
+#uuu[value="2"] {
+  color: blue;
+}
+
+#uuu[value="3"] {
+  color: green;
+}
+
+
+
+
+
+
+
+  
+  

@@ -1,0 +1,114 @@
+<% layout('layouts/boilerplate') %>
+<script>
+  const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
+  const shop = <%- JSON.stringify(shop) %>
+</script>
+<link rel="stylesheet" href="/stylesheets/stars.css">
+<div class="row">
+    <!-- Колонка с информацией о магазине (шоп) -->
+    <div class="col-6">
+      <!--  -->
+      <div class="card mb-3">
+        <img src="<%= shop.images%>" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title"><%= shop.title%></h5>
+            
+            <p class="card-text"><%= shop.location%></p>
+           
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><%= shop.phone %></li>
+      </ul>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Submitted by <%= shop.author.username%></li>
+        </ul>
+        <%  if( currentUser && shop.author.equals(currentUser._id))  {%>
+        <div class="card-body">
+            <a class="card-link btn btn-info" href="/shop/<%=shop._id%>/edit">Edit</a>
+            <form class="d-inline" action="/shop/<%=shop._id%>?_method=DELETE" method="POST">
+                <button class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+        <% } %>
+        <!-- <div class="card-footer text-muted">
+            2 days ago
+        </div> -->
+      </div>
+      <div class="card mb-3">
+        <div class="card-body">
+          <h3 class="card-title">About us:</h3>
+          <p class="card-text"><%= shop.description%></p>
+        </div>
+      </div>
+    </div>
+    
+   
+  
+    <!-- Колонка с отзывами -->
+    <div class="col-6">
+      <div id='map' style='width: 100%; height: 300px;'></div>
+      <hr>
+      <div class="card mb-3">
+          <div class="card-body">
+              <h2 class="pt-3">Leave a Review</h2>
+              <form action="/shop/<%=shop._id%>/reviews" method="POST" class="mb-3 validated-form" novalidate>
+                  <fieldset class="starability-basic">
+                      <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+                      <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                      <label for="first-rate1" title="Terrible">1 star</label>
+                      <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                      <label for="first-rate2" title="Not good">2 stars</label>
+                      <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                      <label for="first-rate3" title="Average">3 stars</label>
+                      <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                      <label for="first-rate4" title="Very good">4 stars</label>
+                      <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                      <label for="first-rate5" title="Amazing">5 stars</label>
+                  </fieldset>
+                  <div id="comment-form" style="display: none;">
+                      <div class="mb-3">
+                          <label class="form-label" for="body">Review</label>
+                          <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3" required></textarea>
+                          <div class="valid-feedback">
+                              Looks good!
+                          </div>
+                      </div>
+                      <button class="btn btn-success">Submit</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+      $(document).ready(function() {
+          $('input[type="radio"]').change(function() {
+              $('#comment-form').show();
+          });
+      });
+  </script>
+      <hr>
+    
+      <!-- Отзывы -->
+      <% for(let review of shop.reviews) { %>
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title"> <%= review.author.username%></h5>
+            <p class="starability-result" data-rating="<%=review.rating%>">
+                Rated: <%= review.rating %> stars
+            </p>
+            <p class="card-text">Review: <%= review.body %></p>
+            <%  if( currentUser && shop.author.equals(currentUser._id))  {%>
+            <form action="/shop/<%=shop._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
+              <button class="btn btn-sm btn-danger">Delete</button>
+            </form>
+            <% } %>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  </div>
+  
+
+<script src="/js/showPageMap.js"></script>

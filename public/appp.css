@@ -1,0 +1,48 @@
+html, body {
+    height: 100%;
+    margin: 0;
+  }
+  
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(45deg, #83a4d4, #b6fbff);
+    background-size: 200% 200%;
+    animation: gradient 10s ease infinite;
+  }
+  
+  .page-container {
+    /* Ваш существующий стиль для #card и других элементов */
+    border-radius: 40px;
+  }
+  #card {
+    position: relative;
+    transition: box-shadow 0.3s ease; /* Плавное изменение тени */
+  }
+  
+  #card:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Тень при наведении */
+  }
+   
+  #basic-info{
+    border-left: 4px solid rgb(0, 138, 30); 
+  }
+  @keyframes gradient {
+    0% {
+      background-position: 0 50%;
+    }
+  
+    50% {
+      background-position: 100% 50%;
+    }
+  
+    100% {
+      background-position: 0 50%;
+    }
+  }
+  
